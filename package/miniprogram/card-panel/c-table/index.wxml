@@ -1,0 +1,7 @@
+<view class="custom-table {{borderClass}}" style="{{style}}">
+  <view class="table-tr" wx:for="{{info.rows}}" wx:for-item="row" wx:key="index" bind:tap="onTap">
+    <view class="table-td" wx:for="{{info.columns}}" wx:for-item="column" wx:key="index" style="{{dataList[row][column].style}}">
+      {{dataList[row][column].content}}
+    </view>
+  </view>
+</view>

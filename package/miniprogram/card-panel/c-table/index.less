@@ -1,0 +1,43 @@
+.custom-table {
+  position: absolute;
+  word-break: break-all;
+  overflow: hidden;
+  background: #fff;
+  outline: none;
+  display: table;
+}
+
+.table-tr {
+  display: table-row;
+}
+
+.table-td {
+  display: table-cell;
+  height: 48px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+/*全部边框*/
+.border-full {
+  border-right: 1px solid #E8EAEC;
+  border-bottom: 1px solid #E8EAEC;
+  .table-td {
+    border-left: 1px solid #E8EAEC;
+    border-top: 1px solid #E8EAEC;
+  }
+}
+
+/*显示外边框*/
+.border-outer {
+  border:1px solid #E8EAEC;
+}
+
+/*显示内边框*/
+.border-inner {
+  .table-td {
+    border-bottom: 1px solid #E8EAEC;
+  }
+}
