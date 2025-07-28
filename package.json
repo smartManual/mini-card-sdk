@@ -1,0 +1,33 @@
+{
+  "name": "@zero-org/mini-card-sdk",
+  "version": "1.0.0",
+  "description": "The small program SDK for the card module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }, 
+  "main": "miniprogram/components/card-panel/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "sdk",
+    "card"
+  ],
+  "author": "jjzuo",
+  "license": "MIT",
+  "miniprogram": "miniprogram",
+  "files": [
+    "miniprogram"
+  ],
+  "devDependencies": {
+    "miniprogram-api-typings": "^2.12.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "miniprogram-component": "^1.0.0"
+  }
+}

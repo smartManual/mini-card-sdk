@@ -1,0 +1,10 @@
+<view class="custom-time-picker" style="{{style}}">
+  <view class="time-wrap" style="{{wrapStyle}}">
+    <picker mode="date" value="{{dateText}}" bindchange="datePickerChange">
+      <text>{{dateText || '选择日期'}}</text>
+    </picker>
+    <picker mode="time" value="{{timeText}}" bindchange="timePickerChange">
+      <text style="margin-left: 5px;">{{timeText || '选择时间'}}</text>
+    </picker>
+  </view>
+</view>

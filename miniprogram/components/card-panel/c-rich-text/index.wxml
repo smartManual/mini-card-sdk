@@ -1,0 +1,6 @@
+<rich-text
+  class="custom-rich-text"
+  style="{{style}}"
+  nodes="{{htmlContent}}"
+  bind:tap="onTap"
+/>

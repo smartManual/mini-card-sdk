@@ -1,0 +1,30 @@
+<view class="checkbox-wrap" style="{{style}}">
+  <block wx:if="{{info.boxType === 'checkbox'}}" wx:for="{{info.optionList}}" wx:key="index">
+    <custom-checkbox 
+      label="{{item.content}}"
+      checked="{{item.checked}}"
+      checkedColor="{{info.checkedColor}}" 
+      uncheckedColor="{{info.uncheckedColor}}" 
+      checkedTextColor="{{info.checkedTextColor}}"
+      uncheckedTextColor="{{info.uncheckedTextColor}}" 
+      size="{{info.size}}"
+      data-option="{{item}}"
+      bind:change="onCheckboxChange"
+      bind:labelClick="onLabelClick"
+    />
+  </block>
+  <block wx:if="{{info.boxType === 'radio'}}" wx:for="{{info.optionList}}" wx:key="index">
+    <custom-radio
+      label="{{item.content}}"
+      checked="{{item.checked}}"
+      checkedColor="{{info.checkedColor}}" 
+      uncheckedColor="{{info.uncheckedColor}}" 
+      checkedTextColor="{{info.checkedTextColor}}" 
+      uncheckedTextColor="{{info.uncheckedTextColor}}" 
+      size="{{info.size}}"
+      data-option="{{item}}"
+      bind:change="onRadioChange"
+      bind:labelClick="onLabelClick"
+    />
+  </block>
+</view>
