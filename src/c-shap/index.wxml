@@ -1,0 +1,5 @@
+<view class="{{['custom-shap', shap]}}" style="{{containerStyle}}" bind:tap="onTap">
+  <view class="rect-angle" style="{{style}}">
+    {{info.text}}
+  </view>
+</view>

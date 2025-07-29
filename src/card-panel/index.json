@@ -1,0 +1,15 @@
+{
+  "usingComponents": {
+    "c-text": "../c-text/index",
+    "c-button": "../c-button/index",
+    "c-image": "../c-image/index",
+    "c-rich-text": "../c-rich-text/index",
+    "c-shap": "../c-shap/index",
+    "c-carousel": "../c-carousel/index",
+    "c-table": "../c-table/index",
+    "c-checkbox": "../c-checkbox/index",
+    "c-input": "../c-input/index",
+    "c-time-picker": "../c-time-picker/index",
+    "c-video": "../c-video/index"
+  }
+}

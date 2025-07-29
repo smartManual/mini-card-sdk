@@ -1,0 +1,26 @@
+<view class="card-panel" style="{{style}}">
+  <block wx:for="{{cardData}}" wx:for-item="cardInfo" wx:key="index">
+    <!--文本组件-->
+    <c-text wx:if="{{cardInfo.type === 'Text'}}" info="{{cardInfo}}" />
+    <!--富文本组件-->
+    <c-rich-text wx:if="{{cardInfo.type === 'RichText'}}" info="{{cardInfo}}" varInfo="{{varInfo}}" baseUrl="{{baseUrl}}" />
+    <!--形状组件-->
+    <c-shap wx:if="{{cardInfo.type === 'Shap'}}" info="{{cardInfo}}" />
+    <!--按钮组件-->
+    <c-button wx:if="{{cardInfo.type === 'Button'}}" info="{{cardInfo}}" cardData="{{cardData}}" varInfo="{{varInfo}}" />
+    <!--图片组件-->
+    <c-image wx:if="{{cardInfo.type === 'Image'}}" info="{{cardInfo}}" />
+    <!--轮播图组件-->
+    <c-carousel wx:if="{{cardInfo.type === 'Carousel'}}" info="{{cardInfo}}" />
+    <!--表格组件-->
+    <c-table wx:if="{{cardInfo.type === 'Table'}}" info="{{cardInfo}}" border="{{cardInfo.borderType}}" />
+    <!--勾选组件-->
+    <c-checkbox wx:if="{{cardInfo.type === 'CheckBox'}}" info="{{cardInfo}}" />
+    <!--输入框组件-->
+    <c-input wx:if="{{cardInfo.type === 'Input'}}" info="{{cardInfo}}" />
+    <!--时间组件-->
+    <c-time-picker wx:if="{{cardInfo.type === 'TimePicker'}}" info="{{cardInfo}}" />
+    <!--视频组件-->
+    <c-video wx:if="{{cardInfo.type === 'Video'}}" info="{{cardInfo}}" baseUrl="{{baseUrl}}" />
+  </block>
+</view>

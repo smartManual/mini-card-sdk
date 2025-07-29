@@ -1,0 +1,6 @@
+<view class="custom-video" style="{{style}}">
+  <video
+    src="{{videoUrl}}" 
+    controls 
+  ></video>
+</view>

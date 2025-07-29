@@ -1,1 +1,0 @@
-<view class="custom-img" style="{{style}}" bind:tap="onTap"></view>

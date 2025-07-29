@@ -1,0 +1,4 @@
+<view class="custom-radio {{checkedClass}}" style="{{style}}">
+  <view class="custom-radio-icon" style="{{iconStyle}}" bind:tap="handleTap"></view>
+  <view class="custom-radio-label" style="{{textStyle}}" bind:tap="onLabelTap">{{label}}</view>
+</view>

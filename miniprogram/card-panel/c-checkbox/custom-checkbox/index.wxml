@@ -1,4 +1,0 @@
-<view class="custom-checkbox {{checkedClass}}" style="{{style}}">
-  <view class="custom-checkbox-icon" style="{{iconStyle}}" bind:tap="handleTap"></view>
-  <view class="custom-checkbox-label" style="{{textStyle}}" bind:tap="onLabelTap">{{label}}</view>
-</view>

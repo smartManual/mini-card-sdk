@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "styleIsolation": "apply-shared",
-  "usingComponents": {
-    "custom-checkbox": "./custom-checkbox/index",
-    "custom-radio": "./custom-radio/index"
-  }
-}

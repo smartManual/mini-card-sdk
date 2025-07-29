@@ -1,3 +1,0 @@
-<view class="custom-text" style="{{style}}">
-  <text bind:tap="onTap">{{info.text}}</text>
-</view>

@@ -1,3 +1,0 @@
-<view class="custom-input" style="{{style}}">
-  <input class="input" value="{{info.text}}" style="{{inputStyle}}" bindinput="onInput"></input>
-</view>
