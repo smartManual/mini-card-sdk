@@ -3,20 +3,33 @@ Component({
     info: {
       type: Object,
       value: {}
-    }
+    },
+    varInfo: {
+      type: Object,
+      value: {}
+    },
   },
   data: {
-    text: '',
     style: '',
     inputStyle: ''
   },
   lifetimes: {
     attached() {
       const info = this.properties.info
-      this.setData({
-        text: info.text
+
+      const text = info.textNodes.map((obj: any) => {
+        return this.getUrl(obj.children)
+      }).join('')
+
+      this.triggerEvent('updateCardData', {
+        id: info.id,
+        text
+      }, {
+        bubbles: true,
+        composed: true
       })
-      const border = info.borderType === 'default' ? '1px solid #d9d9d9' : `${info.borderWidth}px solid ${info.borderColor}`
+
+      const border = info.borderType === 'default' ? `1px solid #d9d9d9` : `${info.borderWidth}px solid ${info.borderColor}`
       this.setData({
         style: `
           left: ${info.x}%;
@@ -39,6 +52,33 @@ Component({
     }
   },
   methods: {
+    isEmpty(obj: any) {
+      if (!obj) {
+        return true
+      }
+
+      if (Array.isArray(obj) && obj.length === 0) {
+        return true
+      }
+
+      return false
+    },
+    getUrl(children: any[]) {
+      return children.map((item: any) => {
+        if (item.type === 'mention') {
+          const info: any = item.info
+          const json: any = this.properties.varInfo
+          const key = info[info.length - 1]
+          if (this.isEmpty(json[key])) {
+            return `@${item.value}`
+          } else {
+            return json[key]
+          }
+        } else if (!item.type) {
+          return item.text.trim()
+        }
+      }).join('')
+    },
     onInput(e: any) {
       this.triggerEvent('updateCardData', {
         id: this.properties.info.id,

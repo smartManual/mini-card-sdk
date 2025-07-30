@@ -17,9 +17,9 @@
     <!--勾选组件-->
     <c-checkbox wx:if="{{cardInfo.type === 'CheckBox'}}" info="{{cardInfo}}" />
     <!--输入框组件-->
-    <c-input wx:if="{{cardInfo.type === 'Input'}}" info="{{cardInfo}}" />
+    <c-input wx:if="{{cardInfo.type === 'Input'}}" info="{{cardInfo}}" varInfo="{{varInfo}}" />
     <!--时间组件-->
-    <c-time-picker wx:if="{{cardInfo.type === 'TimePicker'}}" info="{{cardInfo}}" />
+    <c-time-picker wx:if="{{cardInfo.type === 'TimePicker'}}" info="{{cardInfo}}" varInfo="{{varInfo}}" />
     <!--视频组件-->
     <c-video wx:if="{{cardInfo.type === 'Video'}}" info="{{cardInfo}}" baseUrl="{{baseUrl}}" />
   </block>

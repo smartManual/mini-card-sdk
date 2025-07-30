@@ -1,131 +1,531 @@
-# miniprogram-custom-component
+# @zero-org/mini-card-sdk
 
-小程序自定义组件开发模板：
+微信小程序卡片模块SDK，提供丰富的卡片组件库，支持动态渲染和灵活布局。
 
-* 支持使用 less 语法编写 wxss 文件
-* 使用 webpack 构建 js
-* 支持自定义组件单元测试
-* 支持 eslint
-* 支持多入口构建
+## 简介
 
-## 使用
+`card-panel` 是一个**智能卡片面板容器组件**，能够根据配置数据动态渲染各种类型的子组件，包括文本、图片、按钮、表格、输入框等多种UI元素。该组件采用绝对定位布局，支持自适应高度和高度限制功能。
 
-* 使用[命令行工具](https://github.com/wechat-miniprogram/miniprogram-cli)进行初始化
-* 直接从 github 上 clone 下来
+## 安装
 
-## 开发
-
-1. 安装依赖：
-
-```
-npm install
+```bash
+npm install @zero-org/mini-card-sdk
 ```
 
-2. 执行命令：
+## 快速开始
 
-```
-npm run dev
-```
+### 1. 在页面的 json 配置文件中引入组件
 
-默认会在包根目录下生成 miniprogram\_dev 目录，src 中的源代码会被构建并生成到 miniprogram\_dev/components 目录下。如果需要监听文件变化动态构建，则可以执行命令：
-
-```
-npm run watch
-```
-
-> ps: 如果 minirpogram\_dev 目录下已存在小程序 demo，执行`npm run dev`则不会再将 tools 下的 demo 拷贝到此目录下。而执行`npm run watch`则会监听 tools 目录下的 demo 变动并进行拷贝。
-
-3. 生成的 miniprogram\_dev 目录是一个小程序项目目录，以此目录作为小程序项目目录在开发者工具中打开即可查看自定义组件被使用的效果。
-
-4. 进阶：
-
-* 如果有额外的构建需求，可自行修改 tools 目录中的构建脚本。
-* 内置支持 webpack、less 语法、sourcemap 等功能，默认关闭。如若需要可以自行修改 tools/config.js 配置文件中相关配置。
-* 内置支持多入口构建，如若需要可自行调整 tools/config.js 配置文件的 entry 字段。
-* 默认开启 eslint，可自行调整规则或在 tools/config.js 中注释掉 eslint-loader 行来关闭此功能。
-
-## 发布
-
-> ps: 发布前得确保已经执行构建，小程序 npm 包只有构建出来的目录是真正被使用到的。
-
-1. 如果还没有 npm 帐号，可以到[ npm 官网](https://www.npmjs.com/)注册一个 npm 帐号。
-2. 在本地登录 npm 帐号，在本地执行：
-
-```
-npm adduser
+```json
+{
+  "usingComponents": {
+    "card-panel": "@zero-org/mini-card-sdk/card-panel/index"
+  }
+}
 ```
 
-或者
+### 2. 在 wxml 中使用组件
 
-```
-npm login
-```
-
-3. 在已完成编写的 npm 包根目录下执行：
-
-```
-npm publish
-```
-
-到此，npm 包就成功发布到 npm 平台了。
-
-> PS：一些开发者在开发过程中可能修改过 npm 的源，所以当进行登录或发布时需要注意要将源切回 npm 的源。
-
-## 目录结构
-
-以下为推荐使用的目录结构，如果有必要开发者也可以自行做一些调整:
-
-```
-|--miniprogram_dev // 开发环境构建目录
-|--miniprogram_dist // 生产环境构建目录
-|--src // 源码
-|   |--components // 通用自定义组件
-|   |--images // 图片资源
-|   |
-|   |--xxx.js/xxx.wxml/xxx.json/xxx.wxss // 暴露的 js 模块/自定义组件入口文件
-|
-|--test // 测试用例
-|--tools // 构建相关代码
-|   |--demo // demo 小程序目录，开发环境下会被拷贝生成到 miniprogram_dev 目录中
-|   |--config.js // 构建相关配置文件
-|
-|--gulpfile.js
+```xml
+<card-panel 
+  cardData="{{cardData}}" 
+  varInfo="{{varInfo}}"
+  limitCardHeight="{{true}}"
+  maxHeight="{{400}}"
+  baseUrl="{{baseUrl}}"
+/>
 ```
 
-> PS：对外暴露的 js 模块/自定义组件请放在 src 目录下，不宜放置在过深的目录。另外新增的暴露模块需要在 tools/config.js 的 entry 字段中补充，不然不会进行构建。
+### 3. 在 js 中配置数据
 
-## 测试
-
-* 执行测试用例：
-
+```javascript
+Page({
+  data: {
+    cardData: [
+      {
+        type: 'Text',
+        x: 10,
+        y: 10,
+        width: 200,
+        height: 30,
+        content: '这是一个文本组件'
+      },
+      {
+        type: 'Button',
+        x: 10,
+        y: 50,
+        width: 100,
+        height: 40,
+        text: '点击按钮'
+      }
+    ],
+    varInfo: {
+      // 变量信息对象
+    },
+    baseUrl: 'https://your-domain.com'
+  }
+})
 ```
-npm run test
+
+## 组件属性
+
+| 属性名 | 类型 | 默认值 | 必填 | 说明 |
+|--------|------|--------|------|------|
+| cardData | Array | [] | 是 | 卡片数据数组，包含所有子组件的配置信息 |
+| varInfo | Object | {} | 否 | 变量信息对象，用于动态数据绑定 |
+| limitCardHeight | Boolean | false | 否 | 是否限制卡片面板高度 |
+| maxHeight | Number | 300 | 否 | 最大高度限制（单位：px），仅在 limitCardHeight 为 true 时生效 |
+| baseUrl | String | '' | 否 | 基础URL，用于图片和视频等资源的完整路径拼接 |
+
+## 支持的子组件类型
+
+card-panel 支持以下类型的子组件：
+
+### 1. 文本组件 (Text)
+### 2. 富文本组件 (RichText)
+### 3. 按钮组件 (Button)
+### 4. 图片组件 (Image)
+### 5. 形状组件 (Shap)
+### 6. 轮播图组件 (Carousel)
+### 7. 表格组件 (Table)
+### 8. 勾选组件 (CheckBox)
+### 9. 输入框组件 (Input)
+### 10. 时间选择器 (TimePicker)
+### 11. 视频组件 (Video)
+
+
+
+## 支持的事件
+
+card-panel 组件通过事件冒泡机制，将子组件的各种交互事件向上传递给父组件。以下是支持的所有事件类型：
+
+### 1. 文本组件相关事件
+
+#### textClick
+**触发时机**：用户点击文本组件时触发
+**事件参数**：根据不同的 linkMode，参数结构会有所不同：
+
+**InsideApp 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "InsideApp",
+  linkUrl: "https://www.baidu.com",
+  type: "Text"
+}
 ```
 
-* 执行测试用例并进入 node inspect 调试：
-
-```
-npm run test-debug
-```
-
-* 检测覆盖率：
-
-```
-npm run coverage
+**OutsideApp 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "OutsideApp",
+  linkUrl: "https://www.baidu.com",
+  type: "Text"
+}
 ```
 
-测试用例放在 test 目录下，使用 **miniprogram-simulate** 工具集进行测试，[点击此处查看](https://github.com/wechat-miniprogram/miniprogram-simulate/blob/master/README.md)使用方法。在测试中可能需要变更或调整工具集中的一些方法，可在 test/utils 下自行实现。
-
-## 其他命令
-
-* 清空 miniprogram_dist 目录：
-
+**Intention 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  intentionName: "跳转",
+  linkMode: "Intention",
+  type: "Text"
+}
 ```
-npm run clean
+
+**Entity 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "Entity",
+  standardWord: ["slot", "1940649007788199936"],
+  type: "Text"
+}
 ```
 
-* 清空 miniprogam_dev 目录：
+#### richTextClick
+**触发时机**：用户点击富文本组件时触发
+**事件参数**：参数结构与 textClick 相同，type 为 "RichText"
 
+### 2. 图片和媒体组件相关事件
+
+#### imageClick
+**触发时机**：用户点击图片组件时触发
+**事件参数**：参数结构与 textClick 相同，type 为 "Image"
+
+#### carouselClick
+**触发时机**：用户点击轮播图组件时触发
+**事件参数**：参数结构与 textClick 相同，type 为 "Carousel"
+
+### 3. 形状和表格组件相关事件
+
+#### shapClick
+**触发时机**：用户点击形状组件时触发
+**事件参数**：参数结构与 textClick 相同，type 为 "Shap"
+
+#### tableClick
+**触发时机**：用户点击表格组件时触发
+**事件参数**：参数结构与 textClick 相同，type 为 "Table"
+
+### 4. 按钮相关事件
+
+#### btnClick
+**触发时机**：用户点击按钮组件时触发
+**事件参数**：根据不同的 linkMode，参数结构会有所不同：
+
+**InsideApp 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "InsideApp",
+  linkUrl: "https://www.baidu.com",
+  type: "Button",
+  btnText: "按钮文字"
+}
 ```
-npm run clean-dev
+
+**OutsideApp 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "OutsideApp",
+  linkUrl: "https://www.baidu.com",
+  type: "Button",
+  btnText: "按钮文字"
+}
 ```
+
+**Intention 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  intentionName: "跳转",
+  linkMode: "Intention",
+  type: "Button",
+  btnText: "按钮文字"
+}
+```
+
+**Entity 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "Entity",
+  standardWord: ["slot", "1940649007788199936"],
+  type: "Button",
+  btnText: "按钮文字"
+}
+```
+
+#### btnChecked
+**触发时机**：按钮联动检查通过时触发
+**事件参数**：
+```javascript
+{
+  id: 'button-id',    // 按钮组件ID
+  type: 'Button'      // 组件类型
+}
+```
+
+#### btnUnchecked
+**触发时机**：按钮联动检查未通过时触发
+**事件参数**：
+```javascript
+{
+  id: 'button-id',    // 按钮组件ID
+  type: 'Button'      // 组件类型
+}
+```
+
+#### checkboxClick
+**触发时机**：点击勾选组件标签时触发
+**事件参数**：根据不同的 linkMode，参数结构会有所不同：
+
+**InsideApp 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "InsideApp",
+  linkUrl: "https://www.baidu.com",
+  type: "CheckBox"
+}
+```
+
+**OutsideApp 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "OutsideApp",
+  linkUrl: "https://www.baidu.com",
+  type: "CheckBox"
+}
+```
+
+**Intention 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  intentionName: "跳转",
+  linkMode: "Intention",
+  type: "CheckBox"
+}
+```
+
+**Entity 模式**：
+```javascript
+{
+  id: "365aa053-45ff-4c28-a273-5b4eb0f4b23c",
+  linkMode: "Entity",
+  standardWord: ["slot", "1940649007788199936"],
+  type: "CheckBox"
+}
+```
+
+### 5. 卡片数据更新事件
+
+#### updateCardData
+**触发时机**：输入框组件或时间组件绑定了变量，对应的按钮组件点击时触发
+**card-panel组件对应的updateCardData函数实现**：
+
+```javascript
+methods: {
+    updateCardData(e: any) {
+        const detail = e.detail
+        const index = this.data.cardData.findIndex((obj: any) => obj.id === detail.id)
+        if (index !== -1) {
+            const json = Object.assign({}, this.data.cardData[index], detail)
+            this.setData({
+                [`cardData[${index}]`]: json
+            })
+        }
+    }
+}
+```
+
+### 6. 变量更新事件
+
+#### updateVarInfo
+**触发时机**：按钮联动检查通过后，更新绑定变量时触发
+**事件参数**：
+
+```javascript
+{
+  bindedVar: ["slot", "1940649007788199936"],  // 绑定的变量标识数组
+  bindedVarCode: ["phone_number"],             // 变量代码数组
+  text: "22222明天3333",                       // 变量值
+  type: "Input"                                // 组件类型：Input | TimePicker
+}
+```
+**注意：小程序中收到该事件后要主动调用websocket接口发送更新变量的相关命令**
+
+
+
+## 事件监听示例
+
+```xml
+<!-- pages/demo/demo.wxml -->
+<card-panel
+  cardData="{{cardData}}"
+  varInfo="{{varInfo}}"
+  baseUrl="{{baseUrl}}"
+  bind:textClick="onTextClick"
+  bind:richTextClick="onRichTextClick"
+  bind:shapClick="onShapClick"
+  bind:btnClick="onBtnClick"
+  bind:imageClick="onImageClick"
+  bind:carouselClick="onCarouselClick"
+  bind:tableClick="onTableClick"
+  bind:checkboxClick="onCheckboxClick"
+  bind:updateCardData="onUpdateCardData"
+  bind:btnUnchecked="onBtnUnchecked"
+  bind:btnChecked="onBtnChecked"
+  bind:updateVarInfo="onUpdateVarInfo"
+/>
+```
+
+
+```javascript
+// pages/demo/demo.js
+Page({
+  data: {
+    cardData: [
+      {
+        type: 'Text',
+        x: 20,
+        y: 20,
+        width: 300,
+        height: 40,
+        content: '欢迎使用卡片面板'
+      },
+      {
+        type: 'Image',
+        x: 20,
+        y: 80,
+        width: 200,
+        height: 120,
+        src: '/images/demo.jpg'
+      },
+      {
+        type: 'Button',
+        x: 240,
+        y: 120,
+        width: 80,
+        height: 40,
+        text: '查看详情'
+      },
+      {
+        type: 'Input',
+        x: 20,
+        y: 220,
+        width: 300,
+        height: 40,
+        placeholder: '请输入您的意见'
+      }
+    ],
+    varInfo: {
+      userName: '张三',
+      userAge: 25
+    },
+    baseUrl: 'https://cdn.example.com'
+  }
+})
+```
+
+```xml
+<!-- pages/demo/demo.wxml -->
+<view class="container">
+  <card-panel 
+    cardData="{{cardData}}" 
+    varInfo="{{varInfo}}"
+    limitCardHeight="{{true}}"
+    maxHeight="{{500}}"
+    baseUrl="{{baseUrl}}"
+  />
+</view>
+```
+## 高度自适应机制
+
+card-panel 会**自动计算**所有子组件的最大高度，并设置面板的高度：
+
+- **自适应模式**：`limitCardHeight: false`（默认），面板高度 = 最高子组件的 y + height + 2px
+
+- **限高模式**：`limitCardHeight: true`，面板高度 = Math.min(计算高度, maxHeight)
+
+  
+
+## 最佳实践
+
+### 1. 布局设计建议
+
+- **合理规划坐标**：建议先在设计稿上标注好各组件的位置和尺寸
+- **预留间距**：组件之间保持适当间距，避免视觉拥挤
+- **响应式考虑**：使用百分比宽度时，注意不同屏幕尺寸的适配效果
+
+### 2. 性能优化
+
+- **控制组件数量**：单个面板建议不超过20个子组件
+- **合理使用高度限制**：数据较多时启用`limitCardHeight`
+- **图片优化**：使用适当尺寸的图片，避免过大文件影响加载速度
+
+### 3. 数据管理
+
+- **统一数据格式**：建议创建数据模板，确保格式一致性
+- **变量命名规范**：varInfo中的变量名使用驼峰命名法
+- **数据验证**：在设置cardData前进行必要的数据校验
+
+### 4. 事件处理
+
+- **避免频繁更新**：输入框等交互组件建议使用防抖处理
+- **错误处理**：为事件监听函数添加try-catch保护
+- **状态同步**：及时更新组件状态，保持数据一致性
+
+## 常见问题
+
+### Q: 组件显示不出来怎么办？
+**A**: 检查以下几点：
+1. 确认组件的x、y、width、height属性是否正确设置
+2. 检查type属性是否为支持的组件类型
+3. 确认面板高度是否足够显示组件
+
+### Q: 图片无法显示？
+**A**: 可能的原因：
+1. 图片路径不正确，检查baseUrl和src的拼接
+2. 图片资源不存在或无法访问
+3. 小程序域名白名单未配置
+
+### Q: 事件监听无效？
+**A**: 检查以下方面：
+1. 确认事件名称拼写正确（如bind:btnClick）
+2. 检查事件处理函数是否正确定义
+3. 确认组件是否支持该事件类型
+
+### Q: 高度计算不准确？
+**A**: 可能的解决方案：
+1. 检查所有组件的y和height值是否正确
+2. 考虑使用limitCardHeight限制最大高度
+3. 确认没有组件超出预期范围
+
+### Q: 变量绑定不生效？
+**A**: 排查步骤：
+1. 检查varInfo对象中是否包含对应变量
+2. 确认组件配置中变量名称是否正确
+3. 检查变量数据类型是否匹配
+
+## 更新日志
+
+### v1.0.4 (当前版本)
+- 支持11种子组件类型
+- 完善事件系统，支持多种交互事件
+- 优化高度自适应算法
+- 增强变量绑定功能
+
+### 未来规划
+- 支持更多组件类型
+- 增加动画效果支持
+- 提供可视化配置工具
+- 优化性能和内存占用
+
+## 技术支持
+
+如果在使用过程中遇到问题，可以通过以下方式获取帮助：
+
+1. **查看文档**：仔细阅读本使用说明
+2. **检查示例**：参考完整示例代码
+3. **调试工具**：使用微信开发者工具进行调试
+4. **社区支持**：在相关技术社区提问
+
+## 注意事项
+
+1. **坐标系统**：使用绝对定位，坐标原点在左上角
+2. **单位统一**：所有尺寸单位均为px
+3. **层级关系**：后面的组件会覆盖前面的组件（如有重叠）
+4. **性能优化**：大量组件时建议开启高度限制并设置合理的maxHeight
+5. **数据格式**：确保cardData数组中每个对象都包含必要的type、x、y、width、height属性
+6. **兼容性**：确保微信小程序基础库版本支持所使用的API
+7. **安全性**：对用户输入的数据进行适当的验证和过滤
+
+## 版本信息
+
+**当前版本**：v1.0.4
+**发布日期**：2025年
+**兼容性**：微信小程序基础库 2.0.0+
+
+## 许可证
+
+MIT License
+
+## 作者
+
+**jjzuo**
+专注于微信小程序组件开发
+
+---
+
+*本文档最后更新时间：2025年*
+
+
+
+
+
