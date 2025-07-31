@@ -74,3 +74,22 @@ export enum TimeType {
    */
   Time = 'Time'
 }
+
+export enum DefaultType {
+  /**
+   * 无
+   */
+  None = 'None',
+  /**
+   * 变量
+   */
+  VarValue = 'VarValue',
+  /**
+   * 实时时间
+   */
+  RealTime = 'RealTime',
+  /**
+   * 自定义
+   */
+  Custom = 'Custom'
+}

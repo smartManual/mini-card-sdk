@@ -1,6 +1,6 @@
 {
   "name": "@zero-org/mini-card-sdk",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The small program SDK for the card module",
   "main": "miniprogram_dist/index.js",
   "publishConfig": {
@@ -60,5 +60,8 @@
     "webpack": "^4.29.5",
     "webpack-node-externals": "^1.7.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@zero-org/utils": "^1.2.0",
+    "dayjs": "^1.11.13"
+  }
 }

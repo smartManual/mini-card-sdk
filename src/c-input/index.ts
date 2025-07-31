@@ -1,3 +1,5 @@
+import { isEmpty } from '@zero-org/utils'
+
 Component({
   properties: {
     info: {
@@ -52,24 +54,13 @@ Component({
     }
   },
   methods: {
-    isEmpty(obj: any) {
-      if (!obj) {
-        return true
-      }
-
-      if (Array.isArray(obj) && obj.length === 0) {
-        return true
-      }
-
-      return false
-    },
     getUrl(children: any[]) {
       return children.map((item: any) => {
         if (item.type === 'mention') {
           const info: any = item.info
           const json: any = this.properties.varInfo
           const key = info[info.length - 1]
-          if (this.isEmpty(json[key])) {
+          if (isEmpty(json[key])) {
             return `@${item.value}`
           } else {
             return json[key]
