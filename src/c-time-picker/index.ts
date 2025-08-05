@@ -100,16 +100,27 @@ Component({
         const timeVar: any[] = info.timeVar
         const key = timeVar[timeVar.length - 1]
         if (!isEmpty(getVal(cardVarInfo, key, ''))) {
-          const time = dayjs(this.getTimeTextForValValue(cardVarInfo[key]))
-          const json = this.getDateAndTime(time)
-          this.triggerEvent('updateCardData', {
-            id: info.id,
-            currentDate: json.currentDate,
-            currentTime: json.currentTime
-          }, {
-            bubbles: true,
-            composed: true
-          })
+          const time = this.getTimeTextForValValue(cardVarInfo[key])
+          if (time.isValid()) {
+            const json = this.getDateAndTime(time)
+            this.triggerEvent('updateCardData', {
+              id: info.id,
+              currentDate: json.currentDate,
+              currentTime: json.currentTime
+            }, {
+              bubbles: true,
+              composed: true
+            })
+          } else {
+            this.triggerEvent('updateCardData', {
+              id: info.id,
+              currentDate: [],
+              currentTime: []
+            }, {
+              bubbles: true,
+              composed: true
+            })
+          }
         } else {
           this.triggerEvent('updateCardData', {
             id: info.id,
@@ -138,8 +149,8 @@ Component({
     getDateAndTime(dateTime: Dayjs) {
       const info = this.properties.info
       const year = dateTime.year();   
-      const month = dateTime.month() + 1
-      const day = dateTime.date() 
+      const month = String(dateTime.month() + 1).padStart(2, '0')
+      const day = String(dateTime.date()).padStart(2, '0')
       const hour = String(dateTime.hour()).padStart(2, '0')
       const minute = String(dateTime.minute()).padStart(2, '0')
 
@@ -165,35 +176,12 @@ Component({
         currentTime
       }
     },
-    getTimeTextForValValue(inputStr: string) {
-      // 尝试匹配 "2015年02月3日14时14分" 格式
-      const match1 = inputStr.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日(\d{1,2})时(\d{1,2})分$/);
-      if (match1) {
-        const [, year, month, day, hour, minute] = match1;
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
-      }
-
-      // 尝试匹配 "2015/2/3 11:34" 格式
-      const match2 = inputStr.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})\s+(\d{1,2}):(\d{1,2})$/);
-      if (match2) {
-        const [, year, month, day, hour, minute] = match2;
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
-      }
-
-      // 尝试其他可能的日期格式（如 Date 对象可解析的格式）
-      const date = new Date(inputStr);
-      if (!isNaN(date.getTime())) {
-        // 如果是有效的 Date 对象，格式化为 yyyy-mm-dd hh:mm
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hour = String(date.getHours()).padStart(2, '0');
-        const minute = String(date.getMinutes()).padStart(2, '0');
-        return `${year}-${month}-${day} ${hour}:${minute}`;
-      }
-
-      // 如果都不匹配，返回 null
-      return '';
+    getTimeTextForValValue(text: string) {
+      text = text.replace(/[^0-9\-\/\:\s年月日时分]/g, '')
+      // 对'2015年02月3日14时14分'格式进行转换
+      text = text.replace('年', '-').replace('月', '-').replace('日', ' ').replace('时', ':').replace('分', '')
+      text = text.trim()
+      return dayjs(text)
     },
     datePickerChange(e: any) {
       const value = e.detail.value
