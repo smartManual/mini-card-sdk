@@ -156,6 +156,22 @@ Component({
               variableType: 'slot'
             })
           }
+        } else if (item.type === ComponentType.CheckBox) {
+          const bindedVarCode = item.bindedVarCode
+          if (!isEmpty(bindedVarCode) && item.boxType === 'radio') {
+            const checkedItem = item.optionList.find((obj: any) => obj.checked)
+            if (checkedItem) {
+              const varCode = bindedVarCode[bindedVarCode.length - 1]
+              array.push({
+                // 变量code
+                variableCode: varCode,
+                //变量值
+                value: checkedItem.content, 
+                //global 全局 slot 槽值
+                variableType: 'slot'
+              })
+            }
+          }
         }
       }
 

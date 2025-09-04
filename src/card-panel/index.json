@@ -10,6 +10,7 @@
     "c-checkbox": "../c-checkbox/index",
     "c-input": "../c-input/index",
     "c-time-picker": "../c-time-picker/index",
-    "c-video": "../c-video/index"
+    "c-video": "../c-video/index",
+    "c-form": "../c-form/index"
   }
 }

@@ -57,7 +57,11 @@ export enum ComponentType {
   /**
    * 视频组件
    */
-  Video = 'Video'
+  Video = 'Video',
+  /**
+   * 循环分区组件
+   */
+  Form = 'Form'
 }
 
 export enum TimeType {

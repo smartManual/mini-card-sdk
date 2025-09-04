@@ -1,0 +1,13 @@
+<view class="custom-form" style="{{style}}">
+  <view class="items-wrap" wx:for="{{dataList}}"  wx:for-item="obj" wx:for-index="listIndex" wx:key="index" style="{{obj.wrapStyle}}">
+    <view class="form-item" wx:for="{{obj.list}}" wx:for-index="index" wx:key="index" style="width: {{item.width}}">
+      <block wx:if="{{item.type === 'text'}}">
+        <span class="item-label" wx:if="{{item.label}}">{{item.label}}：</span>
+        <view class="item-content">{{item.content}}</view>
+      </block>
+      <block wx:if="{{item.type === 'button'}}">
+        <view class="custom-btn" style="{{item.btnStyle}}" data-index="{{index}}" bind:tap="onTap">{{item.text}}</view>
+      </block>
+    </view>
+  </view>
+</view>

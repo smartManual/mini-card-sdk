@@ -22,5 +22,7 @@
     <c-time-picker wx:if="{{cardInfo.type === 'TimePicker'}}" info="{{cardInfo}}" varInfo="{{varInfo}}" />
     <!--视频组件-->
     <c-video wx:if="{{cardInfo.type === 'Video'}}" info="{{cardInfo}}" baseUrl="{{baseUrl}}" />
+    <!--循环组件-->
+    <c-form wx:if="{{cardInfo.type === 'Form'}}" info="{{cardInfo}}" cardData="{{cardData}}" varInfo="{{varInfo}}" />
   </block>
 </view>
