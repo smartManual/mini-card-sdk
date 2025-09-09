@@ -1,4 +1,4 @@
-import { isEmpty, getVal } from '@zero-org/utils'
+import { isEmpty, getVal, parseJson } from '@zero-org/utils'
 import { ColorType } from '../const'
 
 Component({
@@ -29,8 +29,13 @@ Component({
       const cardVarInfo = this.properties.varInfo
       const dataVar: any[] = info.dataVar
       const key = dataVar[dataVar.length - 1]
+      const val = cardVarInfo[key]
+      let array = parseJson(val, [])
+      if (!Array.isArray(array)) {
+        array = []
+      }
 
-      const dataList = (cardVarInfo[key] || []).map((obj: any, index: number) => {
+      const dataList = array.map((obj: any, index: number) => {
         const list = this.getDataList(info.optionList, obj)
         return {
           list,

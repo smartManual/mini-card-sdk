@@ -1,6 +1,6 @@
 {
   "name": "@zero-org/mini-card-sdk",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The small program SDK for the card module",
   "main": "miniprogram_dist/index.js",
   "publishConfig": {
